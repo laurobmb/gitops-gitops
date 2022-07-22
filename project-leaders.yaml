@@ -1,0 +1,15 @@
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: project-leaders
+users:
+  - developer
+---
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: administradores
+users:
+  - admin
+  - lagomes
