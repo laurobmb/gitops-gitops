@@ -8,7 +8,7 @@ secretGenerator:
 - name: htpasswd-secret
   namespace: openshift-config
   files:
-  - htpasswd=htpasswd-secret-data
+  - htpasswd=./secret/htpasswd-secret-data
 
 generatorOptions:
   disableNameSuffixHash: true
