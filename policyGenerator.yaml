@@ -1,0 +1,55 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: policy-config-oauth
+placementBindingDefaults:
+  name: binding-policy-openshift-dr-hub
+policyDefaults:
+  categories:
+    - CM Configuration Management
+  controls: 
+    - CM-2 Baseline Configuration
+  namespace: rhacm-policies
+  policySets:
+    - openshift-hub
+    - openshift-clusters
+    - openshift-prd
+  remediationAction: inform
+  severity: medium
+  standards:
+    - NIST SP 800-53
+
+policies:
+  - name: policy-oauth
+    categories:
+      - SI System and Information Integrity
+    controls:
+      - SI-7 Software Firmware and Information Integrity
+    manifests:
+      - path: playbook/clusteradmin.yaml
+      - path: playbook/oauth.yaml
+      - path: playbook/group-ocp-administradores.yaml
+      - path: playbook/group-ocp-project-leaders.yaml
+      - path: playbook/self-provisioners.yaml
+    remediationAction: inform
+    severity: medium
+    standards:
+      - NIST SP 800-53
+    policySets:
+      - openshift-hub
+
+policySets:
+  - description: Aplica políticas para configurar o Disaster Recovery (DR) Regional com Submariner e ODF nos componentes instalados no hub do Advanced Cluster Management (ACM). Este conjunto de políticas é essencial para a orquestração centralizada da solução de DR.
+    name: openshift-hub
+    placement:
+      placementPath: input/hub-placement.yaml
+
+  - description: Aplica políticas para configurar o Disaster Recovery (DR) Regional com Submariner e ODF nos componentes instalados nos clusters que participam da configuração de DR. Essas políticas garantem a replicação e a recuperação de dados e aplicações.
+    name: openshift-clusters
+    placement:
+      placementPath: input/clusters-placement.yaml
+
+  - description: Define as políticas e configurações para os hosts do ambiente de Produção (PJE).
+    name: openshift-prd
+    placement:
+      placementPath: input/prd-placement.yaml

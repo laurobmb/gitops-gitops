@@ -1,0 +1,13 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: placement-openshift-clusters
+  namespace: rhacm-policies
+spec:
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+          - {key: cluster.open-cluster-management.io/clusterset, operator: In, values: ["managed"]}
+          #- {key: name, operator: NotIn, values: ["local-cluster"]}
+          - {key: env, operator: In, values: [prod]}
