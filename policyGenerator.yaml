@@ -26,11 +26,11 @@ policies:
     controls:
       - SI-7 Software Firmware and Information Integrity
     manifests:
-      - path: playbook/clusteradmin.yaml
-      - path: playbook/oauth.yaml
-      - path: playbook/group-ocp-administradores.yaml
-      - path: playbook/group-ocp-project-leaders.yaml
-      - path: playbook/self-provisioners.yaml
+      - path: playbooks/clusteradmin.yaml
+      - path: playbooks/oauth.yaml
+      - path: playbooks/group-ocp-administradores.yaml
+      - path: playbooks/group-ocp-project-leaders.yaml
+      - path: playbooks/self-provisioners.yaml
     remediationAction: inform
     severity: medium
     standards:
@@ -49,7 +49,7 @@ policySets:
     placement:
       placementPath: input/clusters-placement.yaml
 
-  - description: Define as políticas e configurações para os hosts do ambiente de Produção (PJE).
+  - description: Define as políticas e configurações para os hosts do ambiente de Produção.
     name: openshift-prd
     placement:
       placementPath: input/prd-placement.yaml
