@@ -1,0 +1,51 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: policy-config-cluster-for-self-provisioners
+placementBindingDefaults:
+  name: binding-policy-openshift-for-self-provisioners
+policyDefaults:
+  categories:
+    - CM Configuration Management
+  controls: 
+    - CM-2 Baseline Configuration
+  standards:
+    - NIST SP 800-53
+  namespace: rhacm-policies
+  policySets:
+    - openshift-hub
+    - openshift-clusters
+    - openshift-prd
+  remediationAction: inform
+  severity: medium
+
+policies:
+  - name: configure-self-provisioners
+    categories:
+      - SI System and Information Integrity
+    controls:
+      - SI-7 Software Firmware and Information Integrity
+    standards:
+      - NIST SP 800-53
+    manifests:
+      - path: playbooks/self-provisioners.yaml
+    policySets:
+      - openshift-prd
+    remediationAction: inform
+    severity: medium
+    
+policySets:
+  - description: Aplica políticas para configurar OAUTH no cluster HUB
+    name: openshift-hub
+    placement:
+      placementPath: input/hub-placement.yaml
+
+  - description: Aplica políticas para configurar OAUTH em todos os clusters
+    name: openshift-clusters
+    placement:
+      placementPath: input/clusters-placement.yaml
+
+  - description: Aplica políticas para configurar OAUTH no cluster de producao
+    name: openshift-prd
+    placement:
+      placementPath: input/prd-placement.yaml

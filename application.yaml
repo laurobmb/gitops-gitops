@@ -9,8 +9,8 @@ spec:
   project: hub-project # <-- ALTERE AQUI
   source:
     repoURL: https://github.com/laurobmb/gitops-gitops.git
-    path: /
-    targetRevision: main
+    path: oauth
+    targetRevision: master
   destination:
     server: https://kubernetes.default.svc
     namespace: gitops-hub
@@ -18,40 +18,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
 
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: app-flask-appset
-  namespace: gitops-hub
-spec:
-  ignoreDifferences:
-  - group: apps.openshift.io
-    kind: DeploymentConfig
-    jsonPointers:
-    - /spec/template/spec/containers/0/image
-  - group: route.openshift.io
-    kind: Route
-    jsonPointers:
-    - /spec/host
-  project: app-project # <-- ALTERE AQUI
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: true
-    syncOptions:
-      - RespectIgnoreDifferences=true
-      - PruneLast=true
-      - Replace=true
-      - CreateNamespace=true
-  source:
-    targetRevision: openshift
-    path: k8s/overlays/flask-hml
-    repoURL: https://github.com/laurobmb/flask.git
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: gitops-hub
